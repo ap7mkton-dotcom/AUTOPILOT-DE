@@ -1,0 +1,8 @@
+{
+  "name": "Copy of AutoPilot DE - Echtzeit Straßenüberwachung",
+  "description": "Ein hochentwickeltes Überwachungssystem für deutsche Autobahnen, Bundes- und Landesstraßen mit KI-gestützter Routenoptimierung, GPS-Integration und Fahrzeugmodul-Kopplung.",
+  "requestFramePermissions": [
+    "geolocation",
+    "microphone"
+  ]
+}
