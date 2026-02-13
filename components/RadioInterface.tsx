@@ -10,6 +10,7 @@ interface RadioInterfaceProps {
 const RadioInterface: React.FC<RadioInterfaceProps> = ({ incidents }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStation, setCurrentStation] = useState('Antenne Bayern');
+  const [isTrafficOverrideEnabled, setIsTrafficOverrideEnabled] = useState(true);
 
   const stations = [
     'Antenne Bayern',
@@ -66,17 +67,36 @@ const RadioInterface: React.FC<RadioInterfaceProps> = ({ incidents }) => {
         </div>
 
         {/* Traffic Override Panel */}
-        <div className="mt-12 bg-red-600/10 border border-red-500/20 p-6 rounded-3xl flex items-center justify-between">
+        <div className={`mt-12 transition-all duration-500 p-6 rounded-3xl flex items-center justify-between border ${isTrafficOverrideEnabled ? 'bg-red-600/10 border-red-500/20' : 'bg-white/5 border-white/10 opacity-60'}`}>
            <div className="flex items-center gap-4">
-             <div className="p-3 bg-red-600 rounded-xl animate-pulse">
+             <div className={`p-3 rounded-xl transition-all ${isTrafficOverrideEnabled ? 'bg-red-600 animate-pulse' : 'bg-gray-700'}`}>
                <Mic2 className="text-white w-5 h-5" />
              </div>
              <div>
-               <p className="text-red-500 font-black text-xs uppercase tracking-widest">Verkehrsdienst aktiv</p>
-               <p className="text-sm font-medium">Unterbricht Musik für wichtige Durchsagen</p>
+               <p className={`font-black text-xs uppercase tracking-widest transition-colors ${isTrafficOverrideEnabled ? 'text-red-500' : 'text-gray-500'}`}>
+                 {isTrafficOverrideEnabled ? 'Verkehrsdienst aktiv' : 'Verkehrsdienst stumm'}
+               </p>
+               <p className="text-sm font-medium text-gray-300">
+                 {isTrafficOverrideEnabled ? 'Unterbricht Musik für wichtige Durchsagen' : 'Durchsagen werden ignoriert'}
+               </p>
              </div>
            </div>
-           <Volume2 className="text-gray-500" />
+           
+           <div className="flex items-center gap-4">
+             <div className="h-8 w-[1px] bg-white/10 mr-2 hidden sm:block"></div>
+             <button 
+              onClick={() => setIsTrafficOverrideEnabled(!isTrafficOverrideEnabled)}
+              className="relative inline-flex items-center h-8 w-14 rounded-full transition-colors focus:outline-none bg-white/10 border border-white/10"
+             >
+               <span className="sr-only">Toggle Traffic Override</span>
+               <span
+                 className={`${
+                   isTrafficOverrideEnabled ? 'translate-x-7 bg-red-500' : 'translate-x-1 bg-gray-500'
+                 } inline-block w-6 h-6 transform rounded-full transition-all duration-300 ease-in-out shadow-lg`}
+               />
+             </button>
+             <Volume2 className={`transition-colors ${isTrafficOverrideEnabled ? 'text-red-400' : 'text-gray-600'}`} />
+           </div>
         </div>
       </div>
     </div>
